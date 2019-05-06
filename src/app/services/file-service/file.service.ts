@@ -33,17 +33,17 @@ export class FileService {
         subs.next(args);
         subs.complete();
       });
-      this.ipc.send('loadFile');
+      this.ipc.send('loadFile', {value: 'value'});
     });
   }
 
-  saveFile(): Observable<any> {
+  saveFile(value?): Observable<any> {
     return new Observable( (subs) => {
       this.ipc.once('saveFileResponse', (event, args) => {
         subs.next(args);
         subs.complete();
       });
-      this.ipc.send('saveFile');
+      this.ipc.send('saveFile', { value });
     });
   }
 

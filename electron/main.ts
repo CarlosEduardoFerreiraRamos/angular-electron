@@ -41,12 +41,14 @@ ipcMain.on('showFile', (event, arg) => {
 
 ipcMain.on('loadFile', (event, arg) => {
     dialog.showOpenDialog({}, (fileNames: string[], bookMark: string[]) => {
-        console.log('showOpenDialog',fileNames);
+        console.log('showOpenDialog', fileNames, bookMark);
     });
 });
 
 ipcMain.on('saveFile', (event, arg) => {
     dialog.showSaveDialog({}, (fileName: string, bookMark: string) => {
+        
+        console.log('showSaveDialog arg', arg);
         console.log('showSaveDialog', fileName, bookMark);
     });
 });

@@ -9,6 +9,8 @@ import { FileService } from './services/file-service/file.service';
 export class AppComponent {
   title = 'angular-electron';
 
+  text = '';
+
   constructor(private _fileService: FileService) {
   }
 
@@ -25,6 +27,6 @@ export class AppComponent {
   }
 
   onSaveFiles() {
-    this._fileService.saveFile().subscribe( res => console.log('Save File in app component', res));
+    this._fileService.saveFile(this.text).subscribe( res => console.log('Save File in app component', res));
   }
 }

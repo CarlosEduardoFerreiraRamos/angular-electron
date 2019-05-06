@@ -19,4 +19,12 @@ export class AppComponent {
   onShowFiles() {
     this._fileService.showFiles();
   }
+
+  onLoadFiles() {
+    this._fileService.loadFile().subscribe( res => console.log('Load File in app component', res));
+  }
+
+  onSaveFiles() {
+    this._fileService.saveFile().subscribe( res => console.log('Save File in app component', res));
+  }
 }

@@ -28,7 +28,10 @@ function createWindow() {
     });
 }
 electron_1.ipcMain.on('showFile', function (event, arg) {
-    electron_1.shell.showItemInFolder(__dirname);
+    electron_1.dialog.showOpenDialog({}, function (fp, bm) {
+        console.log('showOpenDialog', fp, bm);
+    });
+    // shell.showItemInFolder(__dirname);
 });
 electron_1.ipcMain.on('getFiles', function (event, arg) {
     console.log(arg);

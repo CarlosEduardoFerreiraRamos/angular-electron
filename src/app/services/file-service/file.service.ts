@@ -27,6 +27,26 @@ export class FileService {
     this.ipc.send('showFile');
   }
 
+  loadFile(): Observable<any> {
+    return new Observable( (subs) => {
+      this.ipc.once('loadFileResponse', (event, args) => {
+        subs.next(args);
+        subs.complete();
+      });
+      this.ipc.send('loadFile');
+    });
+  }
+
+  saveFile(): Observable<any> {
+    return new Observable( (subs) => {
+      this.ipc.once('saveFileResponse', (event, args) => {
+        subs.next(args);
+        subs.complete();
+      });
+      this.ipc.send('saveFile');
+    });
+  }
+
   getFiles(): Observable<any> {
     return new Observable( (subs) => {
       this.ipc.once('getFilesResponse', (event, args) => {

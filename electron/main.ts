@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, shell, dialog, OpenDialogOptions } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 import * as fs from 'fs';
@@ -37,6 +37,18 @@ function createWindow() {
 
 ipcMain.on('showFile', (event, arg) => {
     shell.showItemInFolder(__dirname);
+});
+
+ipcMain.on('loadFile', (event, arg) => {
+    dialog.showOpenDialog({}, (fileNames: string[], bookMark: string[]) => {
+        console.log('showOpenDialog',fileNames);
+    });
+});
+
+ipcMain.on('saveFile', (event, arg) => {
+    dialog.showSaveDialog({}, (fileName: string, bookMark: string) => {
+        console.log('showSaveDialog', fileName, bookMark);
+    });
 });
 
 ipcMain.on('getFiles', (event, arg) => {

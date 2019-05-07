@@ -2,8 +2,13 @@ import { app, BrowserWindow, ipcMain, shell, dialog, OpenDialogOptions } from 'e
 import * as path from 'path';
 import * as url from 'url';
 import * as fs from 'fs';
+import * as https from 'https';
 
 let win: BrowserWindow;
+
+const dialogOptions: OpenDialogOptions =  {
+    defaultPath: app.getPath('desktop')
+};
 
 app.on('ready', createWindow);
 
@@ -35,20 +40,35 @@ function createWindow() {
     });
 }
 
+function saveImageToDisk(imageUrl: string, localPath: string) {
+    const fileObject: fs.WriteStream = fs.createWriteStream(localPath);
+    https.get(imageUrl, function(response) {
+        response.pipe(fileObject);
+    });
+}
+
+function getFolderPath([ firstpath ]: string[]) {
+    const arr  = firstpath.split('/');
+    arr.pop();
+    return arr.join('/').concat('/');
+}
+
 ipcMain.on('showFile', (event, arg) => {
     shell.showItemInFolder(__dirname);
 });
 
 ipcMain.on('loadFile', (event, arg) => {
-    dialog.showOpenDialog({}, (fileNames: string[], bookMark: string[]) => {
-        console.log('showOpenDialog', fileNames, bookMark);
+    dialog.showOpenDialog(dialogOptions, ([fileName]: string[], bookMark: string[]) => {
+        console.log('showOpenDialog', fileName, bookMark);
+        dialogOptions.defaultPath = path.dirname(fileName);
     });
 });
 
-ipcMain.on('saveFile', (event, arg) => {
-    dialog.showSaveDialog({}, (fileName: string, bookMark: string) => {
-        console.log('showSaveDialog arg', arg);
+ipcMain.on('saveFile', (event, {value}) => {
+    dialog.showSaveDialog(dialogOptions, (fileName: string, bookMark: string) => {
+        console.log('showSaveDialog arg', value);
         console.log('showSaveDialog', fileName, bookMark);
+        saveImageToDisk(value, fileName);
     });
 });
 

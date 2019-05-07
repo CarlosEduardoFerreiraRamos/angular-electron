@@ -11,6 +11,8 @@ export class AppComponent {
 
   text = '';
 
+  imageUrl = ''
+
   constructor(private _fileService: FileService) {
   }
 
@@ -26,7 +28,7 @@ export class AppComponent {
     this._fileService.loadFile().subscribe( res => console.log('Load File in app component', res));
   }
 
-  onSaveFiles() {
-    this._fileService.saveFile(this.text).subscribe( res => console.log('Save File in app component', res));
+  onSaveFiles(value: string) {
+    this._fileService.saveFile(value).subscribe( res => console.log('Save File in app component', res));
   }
 }

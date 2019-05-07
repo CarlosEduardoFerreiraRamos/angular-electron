@@ -54,8 +54,8 @@ ipcMain.on('saveFile', (event, arg) => {
 });
 
 ipcMain.on('getFiles', (event, arg) => {
-    console.log(arg)
-    console.log(__dirname)
+    console.log(arg);
+    console.log(__dirname);
     const files = fs.readdirSync(__dirname);
     win.webContents.send('getFilesResponse', files);
 });

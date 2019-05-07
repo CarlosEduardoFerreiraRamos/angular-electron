@@ -47,7 +47,6 @@ ipcMain.on('loadFile', (event, arg) => {
 
 ipcMain.on('saveFile', (event, arg) => {
     dialog.showSaveDialog({}, (fileName: string, bookMark: string) => {
-
         console.log('showSaveDialog arg', arg);
         console.log('showSaveDialog', fileName, bookMark);
     });
